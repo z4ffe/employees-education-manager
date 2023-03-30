@@ -103,3 +103,4 @@ Temporary Items
 /.idea
 /node_modules
 .idea/*
+/server/node_modules
