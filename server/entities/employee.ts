@@ -1,22 +1,25 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn} from 'typeorm'
+import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm'
 
 @Entity('employee')
 class Employee extends BaseEntity {
-   @PrimaryColumn()
+   @PrimaryGeneratedColumn()
    id: number
 
    @Column({
       nullable: false,
+      length: 25
    })
    first_name: string
 
    @Column({
       nullable: false,
+      length: 25,
    })
    middle_name: string
 
    @Column({
       nullable: false,
+      length: 25
    })
    last_name: string
 

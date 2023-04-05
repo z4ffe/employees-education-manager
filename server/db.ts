@@ -1,4 +1,4 @@
-import {createConnection} from 'typeorm'
+import {DataSource} from 'typeorm'
 import Education from './entities/education'
 import Employee from './entities/employee'
 
@@ -12,23 +12,15 @@ const PASSWORD = process.env.DB_PW
 
 //
 
-const db = async (): Promise<void> => {
-   try {
-      await createConnection({
-         type: 'postgres',
-         host: HOST,
-         port: PORT,
-         username: USER,
-         password: PASSWORD,
-         database: NAME,
-         entities: [Employee, Education],
-         synchronize: true
-      })
-      console.log('Postgres Connected')
-   } catch (error) {
-      console.log(error)
-      throw new Error('Postgres Connection Failed')
-   }
-}
+const DBDataSource = new DataSource({
+   type: 'postgres',
+   host: HOST,
+   port: PORT,
+   username: USER,
+   password: PASSWORD,
+   database: NAME,
+   entities: [Employee, Education],
+   synchronize: false
+})
 
-export default db
+export default DBDataSource

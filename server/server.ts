@@ -26,5 +26,13 @@ app.get('/health', (req, res) => {
 
 //
 
-db()
-app.listen(PORT, (): void => console.log(`Server is running on PORT: ${PORT}`))
+const main = async (): Promise<void> => {
+   try {
+      await db.initialize().then((): void => console.log(`PostgreSQL Connected`))
+      await app.listen(PORT, (): void => console.log(`Server is running on PORT: ${PORT}`))
+   } catch (error) {
+      console.log(error)
+   }
+}
+
+main()
