@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, PrimaryColumn} from 'typeorm'
+import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn} from 'typeorm'
 
 @Entity('employee')
 class Employee extends BaseEntity {
@@ -24,6 +24,12 @@ class Employee extends BaseEntity {
       type: 'numeric',
    })
    education: number
+
+   @CreateDateColumn()
+   date_created: string
+
+   @UpdateDateColumn()
+   date_update: string
 }
 
 export default Employee

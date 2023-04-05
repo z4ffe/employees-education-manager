@@ -7,13 +7,17 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
     "noImplicitAny": true,
     "typeRoots": [
-      "./global.d.ts", "./node_modules/@types"]
+      "./global.d.ts",
+      "./node_modules/@types"
+    ]
   },
   "include": [
     "**.ts"

@@ -3,6 +3,7 @@ import 'dotenv/config.js'
 import express from 'express'
 import httpStatus from 'http-status'
 import db from './db'
+import router from './routes'
 
 //
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: false}))
 
 //
 
+app.use('/', router)
 app.get('/health', (req, res) => {
    res.status(httpStatus.OK).send('works')
 })
