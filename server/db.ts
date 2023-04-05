@@ -1,4 +1,6 @@
 import {createConnection} from 'typeorm'
+import Education from './entities/education'
+import Employee from './entities/employee'
 
 //
 
@@ -10,7 +12,7 @@ const PASSWORD = process.env.DB_PW
 
 //
 
-const db = async () => {
+const db = async (): Promise<void> => {
    try {
       await createConnection({
          type: 'postgres',
@@ -19,6 +21,8 @@ const db = async () => {
          username: USER,
          password: PASSWORD,
          database: NAME,
+         entities: [Employee, Education],
+         synchronize: true
       })
       console.log('Postgres Connected')
    } catch (error) {
