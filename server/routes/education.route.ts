@@ -1,10 +1,12 @@
 import * as express from 'express'
-import eductionController from '../controllers/eductionController'
+import educationController from '../controllers/education.controller'
 const router = express.Router()
 
 router.route('')
-   .get(eductionController.getAllEducations)
-   .post(eductionController.addEducation)
+   .get(educationController.getAllEducations)
+   .post(educationController.addEducation)
+   .patch(educationController.updateEducationById)
+   .delete(educationController.deleteEducationById)
 
 export default router
 

@@ -20,7 +20,7 @@ const DBDataSource = new DataSource({
    password: PASSWORD,
    database: NAME,
    entities: [Employee, Education],
-   synchronize: false
+   synchronize: true
 })
 
 export default DBDataSource
