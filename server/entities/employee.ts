@@ -24,9 +24,10 @@ class Employee extends BaseEntity {
    last_name: string
 
    @Column({
-      type: 'numeric',
+      type: 'varchar',
+      default: ''
    })
-   education: number
+   education: string
 
    @CreateDateColumn()
    date_created: string

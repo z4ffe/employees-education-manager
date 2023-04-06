@@ -1,7 +1,7 @@
-import cors from 'cors'
-import 'dotenv/config.js'
 import express from 'express'
+import cors from 'cors'
 import httpStatus from 'http-status'
+import 'dotenv/config.js'
 import db from './db'
 import router from './routes'
 
@@ -28,7 +28,8 @@ app.get('/health', (req, res) => {
 
 const main = async (): Promise<void> => {
    try {
-      await db.initialize().then((): void => console.log(`PostgreSQL Connected`))
+      await db.initialize()
+      console.log(`PostgreSQL Connected`)
       await app.listen(PORT, (): void => console.log(`Server is running on PORT: ${PORT}`))
    } catch (error) {
       console.log(error)
