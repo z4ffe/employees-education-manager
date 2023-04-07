@@ -8,12 +8,14 @@ export interface IEducationElem {
 
 interface IEducationState {
 	educationList: IEducationElem[]
+	listLength: number
 	loading: boolean
 	rejected: boolean
 }
 
 const initialState: IEducationState = {
 	educationList: [],
+	listLength: 0,
 	loading: false,
 	rejected: false,
 }
@@ -28,7 +30,8 @@ const educationSlice = createSlice({
 		})
 		builder.addCase(fetchAllEducations.fulfilled, (state, action) => {
 			state.loading = false
-			state.educationList = action.payload
+			state.educationList = action.payload[0]
+			state.listLength = action.payload[1]
 		})
 		builder.addCase(fetchAllEducations.rejected, (state) => {
 			state.loading = false

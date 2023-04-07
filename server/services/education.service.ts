@@ -7,9 +7,16 @@ const addNewEducation = async (req: any) => {
 	return await DBDataSource.manager.save(newEducation)
 }
 
-const getAllEducations = async (order: any) => {
+const getAllEducations = async (order: any = 'ASC', skip: any = 0, take: any = 10) => {
 	const educationRepository = await DBDataSource.getRepository('education')
-	return await educationRepository.find({order: {id: order}})
+	return await educationRepository.findAndCount({
+		order:
+			{
+				id: order,
+			},
+		skip: skip,
+		take: take,
+	})
 }
 
 const updateEducationById = async (id: number, title: string) => {

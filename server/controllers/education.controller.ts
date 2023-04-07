@@ -5,8 +5,8 @@ import educationService from '../services/education.service'
 const educationController = {
 	async getAllEducations(req: Request, res: Response, next: NextFunction) {
 		try {
-			const {order} = req.query
-			const educationsList = await educationService.getAllEducations(order)
+			const {order, skip, take} = req.query
+			const educationsList = await educationService.getAllEducations(order, skip, take)
 			if (!educationsList) {
 				res.status(httpStatus.NO_CONTENT).send('Content not found')
 			}

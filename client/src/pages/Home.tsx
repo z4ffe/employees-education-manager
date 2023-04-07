@@ -7,20 +7,26 @@ import {fetchAllEducations} from '../store/thunks/educationThunk'
 import {fetchAllEmployees} from '../store/thunks/employeeThunk'
 
 const Home = () => {
-   const dispatch = useAppDispatch()
+	const dispatch = useAppDispatch()
 
-   useEffect(() => {
-      dispatch(fetchAllEmployees())
-      dispatch(fetchAllEducations())
-   }, [])
+	const initEducationParams = {
+		order: 'ASC',
+		skip: 0,
+		take: 10,
+	}
 
-   return (
-      <Flex flexDir="column">
-         <Heading alignSelf="center">Home page</Heading>
-         <Employee />
-         <Education />
-      </Flex>
-   )
+	useEffect(() => {
+		dispatch(fetchAllEmployees())
+		dispatch(fetchAllEducations(initEducationParams))
+	}, [])
+
+	return (
+		<Flex flexDir='column'>
+			<Heading alignSelf='center'>Home page</Heading>
+			<Employee />
+			<Education />
+		</Flex>
+	)
 }
 
 export default Home
