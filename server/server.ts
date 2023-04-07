@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: false}))
 
 //
 
-app.use('/', router)
+app.use('/api', router)
 app.get('/health', (req, res) => {
    res.status(httpStatus.OK).send('works')
 })

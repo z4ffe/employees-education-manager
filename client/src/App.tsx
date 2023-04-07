@@ -9,7 +9,6 @@ const App = () => {
       <Provider store={store}>
          <ChakraProvider theme={mainTheme}>
             <Flex>
-               APp
             </Flex>
          </ChakraProvider>
       </Provider>
