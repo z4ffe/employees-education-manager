@@ -10,10 +10,12 @@ const Pagination: FC<IProps> = ({handleTake}): JSX.Element => {
 	const {listLength} = useAppSelector(state => state.educationReducer)
 
 	return (
-		<Flex>
+		<Flex w='70%' border='1px solid #EDF2F7' borderTop='none' borderRadius='0 0 10px 10px' h='70px'
+				alignItems='center' justifyContent='center'>
 			<Flex>
 				<Text>Строк на странице: </Text>
-				<Select placeholder='' onChange={(e) => handleTake(+e.target.value)} w='200px'>
+				<Select placeholder='' isDisabled={!listLength} onChange={(e) => handleTake(+e.target.value)} w='200px'>
+					{listLength === 0 ? <option value=''>Нет записей</option> : null}
 					{listLength > 0 ? <option value='5'>5</option> : null}
 					{listLength > 5 ? <option value='25'>25</option> : null}
 					{listLength > 25 ? <option value='50'>50</option> : null}

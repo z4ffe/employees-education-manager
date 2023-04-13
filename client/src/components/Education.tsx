@@ -1,10 +1,10 @@
-import {Button, Flex, Heading} from '@chakra-ui/react'
+import {Flex, Heading} from '@chakra-ui/react'
 import React, {useEffect, useState} from 'react'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks'
-import EducationElement from '../shared/EducationElement'
+import ControlPanelEducation from '../shared/ControlPanelEducation'
+import EducationTable from '../shared/EducationTable'
 import Pagination from '../shared/Pagination'
 import {deleteEducationById, fetchAllEducations} from '../store/thunks/educationThunk'
-import {handleOrder} from '../utils/handleOrder'
 
 const Education = () => {
 	const {educationList, listLength, rejected} = useAppSelector(state => state.educationReducer)
@@ -13,22 +13,30 @@ const Education = () => {
 	const [order, setOrder] = useState('ASC')
 	const [skip, setSkip] = useState(0)
 	const [take, setTake] = useState(10)
-	const [active, setActive] = useState<number | null>(null)
+	const [active, setActive] = useState<number[]>([])
+
+	//
 
 	const handleSkip = (offset: number) => setSkip(offset)
 	const handleTake = (page: number) => setTake(page)
 	const handleActive = (id: number) => {
-		if (id === active) {
-			return setActive(null)
+		if (active.includes(id)) {
+			const modifiedActive = active.filter(el => el !== id)
+			return setActive(modifiedActive)
 		}
-		setActive(id)
+		setActive(prevState => [...prevState, id])
 	}
 	const handleDelete = async () => {
-		await dispatch(deleteEducationById(active))
-		setActive(null)
-		const data = {order, skip, take}
-		await dispatch(fetchAllEducations(data))
+		if (active.length) {
+			await dispatch(deleteEducationById(active))
+			setActive([])
+			const data = {order, skip, take}
+			await dispatch(fetchAllEducations(data))
+		}
+		return
 	}
+
+	//
 
 	useEffect(() => {
 		const data = {order, skip, take}
@@ -36,21 +44,10 @@ const Education = () => {
 	}, [order, skip, take])
 
 	return (
-		<Flex flexDir='column'>
-			<Heading>Образование. Выбор и редактирование</Heading>
-			<Flex gap='10px'>
-				<Button w='130px' h='130px' backgroundColor='blue'>Редактировать</Button>
-				<Button w='130px' h='130px' backgroundColor='grey'>Добавить запись</Button>
-				<Button w='130px' h='130px' backgroundColor='red' onClick={handleDelete}>Удалить
-					запись</Button>
-			</Flex>
-			<Flex flexDir='column'>
-				<Button onClick={() => setOrder(handleOrder(order))}></Button>
-				{educationList ? educationList.map(el => {
-					return (<EducationElement key={el.id} id={el.id} title={el.title} active={active}
-													  handleActive={handleActive} />)
-				}) : null}
-			</Flex>
+		<Flex flexDir='column' w='100%' alignItems='center'>
+			<Heading marginY='20px' fontSize='25px' textAlign='center'>Образование. Выбор и редактирование</Heading>
+			<ControlPanelEducation handleDelete={handleDelete} />
+			<EducationTable order={order} active={active} handleActive={handleActive} setOrder={setOrder} />
 			<Pagination handleTake={handleTake} />
 		</Flex>
 	)

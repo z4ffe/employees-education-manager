@@ -37,12 +37,11 @@ const educationController = {
 	},
 	async deleteEducationById(req: Request, res: Response, next: NextFunction) {
 		try {
-			const currentEducation = await educationService.findEducationById(req)
-			if (!currentEducation) {
-				return res.status(httpStatus.NOT_FOUND).send('Content not found')
+			if (!req.body.id.length) {
+				return res.status(httpStatus.NOT_FOUND).json({message: 'Array must contain data'})
 			}
-			const deletedEducation = await educationService.deleteEducationById(currentEducation.id)
-			return res.status(httpStatus.OK).json({message: 'deleted', currentEducation})
+			const deletedEducation = await educationService.deleteEducationById(req.body.id)
+			return res.status(httpStatus.OK).json({message: 'deleted', deletedEducation})
 		} catch (error) {
 			console.log(error)
 		}

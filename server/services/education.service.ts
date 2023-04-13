@@ -28,9 +28,9 @@ const updateEducationById = async (id: number, title: string) => {
 	}
 }
 
-const deleteEducationById = async (id: number) => {
+const deleteEducationById = async (id: number[]) => {
 	const educationRepository = await DBDataSource.getRepository('education')
-	return await educationRepository.delete({id})
+	return await educationRepository.delete(id)
 }
 
 //

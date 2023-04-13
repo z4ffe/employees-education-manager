@@ -1,18 +1,20 @@
-import {Flex} from '@chakra-ui/react'
+import {Checkbox, Td, Tr} from '@chakra-ui/react'
 import React from 'react'
 import {IEducationElem} from '../store/reducers/educationSlice'
 
 interface IProps extends IEducationElem {
-	active: number | null
+	active: number[]
+	idx: number
 	handleActive: (id: number) => void
 }
 
-const EducationElement: React.FC<IProps> = ({id, title, active, handleActive}) => {
+const EducationElement: React.FC<IProps> = ({id, idx, title, active, handleActive}) => {
 	return (
-		<Flex onClick={() => handleActive(id)} backgroundColor={active === id ? 'lightblue' : 'transparent'}>
-			<Flex>{id}</Flex>
-			<Flex>{title}</Flex>
-		</Flex>
+		<Tr cursor='pointer' onClick={() => handleActive(id)}>
+			<Td w='15px'>{id}</Td>
+			<Td w='25px'><Checkbox onInput={() => handleActive(id)} isChecked={active.includes(id)} /></Td>
+			<Td w='200px'>{title}</Td>
+		</Tr>
 	)
 }
 

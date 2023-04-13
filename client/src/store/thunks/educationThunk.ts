@@ -11,9 +11,9 @@ export const fetchAllEducations = createAsyncThunk('educationSlice/fetchAllEduca
 	}
 })
 
-export const deleteEducationById = createAsyncThunk('educationSlice/deleteEducationById', async (id: number | null) => {
+export const deleteEducationById = createAsyncThunk('educationSlice/deleteEducationById', async (id: number[]) => {
 	try {
-		if (id === null) {
+		if (!id.length) {
 			return
 		}
 		const response = await apiInstance.delete(`/education`, {
