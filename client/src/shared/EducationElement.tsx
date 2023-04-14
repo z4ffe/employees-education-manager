@@ -11,9 +11,10 @@ interface IProps extends IEducationElem {
 const EducationElement: React.FC<IProps> = ({id, idx, title, active, handleActive}) => {
 	return (
 		<Tr cursor='pointer' onClick={() => handleActive(id)}>
-			<Td w='15px'>{id}</Td>
-			<Td w='25px'><Checkbox onInput={() => handleActive(id)} isChecked={active.includes(id)} /></Td>
-			<Td w='200px'>{title}</Td>
+			<Td>{id}</Td>
+			<Td><Checkbox onInput={() => handleActive(id)}
+							  isChecked={active.includes(id)} /></Td>
+			<Td w='90%'>{title}</Td>
 		</Tr>
 	)
 }

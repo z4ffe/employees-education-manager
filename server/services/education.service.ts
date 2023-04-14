@@ -4,7 +4,8 @@ import Education from '../entities/education'
 const addNewEducation = async (req: any) => {
 	const newEducation = new Education()
 	newEducation.title = req.body.title
-	return await DBDataSource.manager.save(newEducation)
+	await DBDataSource.manager.save(newEducation)
+	return await DBDataSource.getRepository('education').findAndCount()
 }
 
 const getAllEducations = async (order: any = 'ASC', skip: any = 0, take: any = 10) => {

@@ -1,3 +1,4 @@
+import {ArrowDownIcon, ArrowUpIcon} from '@chakra-ui/icons'
 import {Checkbox, Flex, Table, TableContainer, Tbody, Th, Thead, Tr} from '@chakra-ui/react'
 import React from 'react'
 import {useAppSelector} from '../lib/redux/hooks'
@@ -20,7 +21,8 @@ const EducationTable: React.FC<IProps> = ({active, order, setOrder, handleActive
 				<Table variant='simple'>
 					<Thead>
 						<Tr>
-							<Th cursor='pointer' onClick={() => setOrder(handleOrder(order))}>Номер</Th>
+							<Th cursor='pointer' onClick={() => setOrder(handleOrder(order))}>Номер {order === 'ASC' ?
+								<ArrowDownIcon /> : <ArrowUpIcon />}</Th>
 							<Th><Checkbox /></Th>
 							<Th>Образование</Th>
 						</Tr>

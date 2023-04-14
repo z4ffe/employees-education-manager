@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {fetchAllEducations} from '../thunks/educationThunk'
+import {addNewEducation, fetchAllEducations} from '../thunks/educationThunk'
 
 export interface IEducationElem {
 	id: number
@@ -34,6 +34,18 @@ const educationSlice = createSlice({
 			state.listLength = action.payload[1]
 		})
 		builder.addCase(fetchAllEducations.rejected, (state) => {
+			state.loading = false
+			state.rejected = true
+		})
+		builder.addCase(addNewEducation.pending, (state) => {
+			state.loading = true
+		})
+		builder.addCase(addNewEducation.fulfilled, (state, action) => {
+			state.loading = false
+			state.educationList = action.payload[0]
+			state.listLength = action.payload[1]
+		})
+		builder.addCase(addNewEducation.rejected, (state) => {
 			state.loading = false
 			state.rejected = true
 		})

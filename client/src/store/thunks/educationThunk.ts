@@ -11,6 +11,17 @@ export const fetchAllEducations = createAsyncThunk('educationSlice/fetchAllEduca
 	}
 })
 
+export const addNewEducation = createAsyncThunk('education/addNewEducation', async (name: string) => {
+	try {
+		const response = await apiInstance.post('/education', {
+			title: name,
+		})
+		return response.data
+	} catch (error) {
+		console.log(error)
+	}
+})
+
 export const deleteEducationById = createAsyncThunk('educationSlice/deleteEducationById', async (id: number[]) => {
 	try {
 		if (!id.length) {

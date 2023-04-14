@@ -17,8 +17,8 @@ const educationController = {
 	},
 	async addEducation(req: Request, res: Response, next: NextFunction) {
 		try {
-			const newEducation = await educationService.addNewEducation(req)
-			return res.status(httpStatus.OK).json({message: 'created', newEducation})
+			const educationList = await educationService.addNewEducation(req)
+			return res.status(httpStatus.OK).json(educationList)
 		} catch (error) {
 			console.log(error)
 		}
