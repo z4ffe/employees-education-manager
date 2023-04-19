@@ -13,14 +13,14 @@ const PASSWORD = process.env.DB_PW
 //
 
 const DBDataSource = new DataSource({
-   type: 'postgres',
-   host: HOST,
-   port: PORT,
-   username: USER,
-   password: PASSWORD,
-   database: NAME,
-   entities: [Employee, Education],
-   synchronize: true
+	type: 'postgres',
+	host: HOST,
+	port: PORT,
+	username: USER,
+	password: PASSWORD,
+	database: NAME,
+	entities: [Employee, Education],
+	synchronize: true,
 })
 
 export default DBDataSource

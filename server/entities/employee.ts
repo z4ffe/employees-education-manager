@@ -1,39 +1,39 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm'
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm'
+import Education from './education'
 
 @Entity('employee')
-class Employee extends BaseEntity {
-   @PrimaryGeneratedColumn()
-   id: number
+class Employee {
+	@PrimaryGeneratedColumn()
+	id: number
 
-   @Column({
-      nullable: false,
-      length: 25
-   })
-   first_name: string
+	@Column({
+		nullable: false,
+		length: 25,
+	})
+	first_name: string
 
-   @Column({
-      nullable: false,
-      length: 25,
-   })
-   middle_name: string
+	@Column({
+		nullable: false,
+		length: 25,
+	})
+	middle_name: string
 
-   @Column({
-      nullable: false,
-      length: 25
-   })
-   last_name: string
+	@Column({
+		nullable: false,
+		length: 25,
+	})
+	last_name: string
 
-   @Column({
-      type: 'varchar',
-      default: ''
-   })
-   education: string
+	@ManyToOne(() => Education, education => education.employees, {
+		onDelete: 'SET NULL',
+	})
+	education: Education
 
-   @CreateDateColumn()
-   date_created: string
+	@CreateDateColumn()
+	created_at: string
 
-   @UpdateDateColumn()
-   date_update: string
+	@UpdateDateColumn()
+	updated_at: string
 }
 
 export default Employee

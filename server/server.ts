@@ -3,6 +3,7 @@ import 'dotenv/config.js'
 import express from 'express'
 import httpStatus from 'http-status'
 import db from './db'
+import initDataBase from './db.init'
 import router from './routes'
 
 //
@@ -30,6 +31,8 @@ const main = async (): Promise<void> => {
 	try {
 		await db.initialize()
 		console.log(`PostgreSQL Connected`)
+		await initDataBase()
+		console.log(`Inital values load successfully`)
 		await app.listen(PORT, (): void => console.log(`Server is running on PORT: ${PORT}`))
 	} catch (error) {
 		console.log(error)
