@@ -8,6 +8,7 @@ export const fetchAllEducations = createAsyncThunk('educationSlice/fetchAllEduca
 		return response.data
 	} catch (error) {
 		console.log(error)
+		throw error
 	}
 })
 
@@ -19,6 +20,7 @@ export const addNewEducation = createAsyncThunk('education/addNewEducation', asy
 		return response.data
 	} catch (error) {
 		console.log(error)
+		throw error
 	}
 })
 
@@ -35,5 +37,6 @@ export const deleteEducationById = createAsyncThunk('educationSlice/deleteEducat
 		return response.data
 	} catch (error) {
 		console.log(error)
+		throw error
 	}
 })

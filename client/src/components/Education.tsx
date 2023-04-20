@@ -5,23 +5,21 @@ import ControlPanelEducation from '../shared/ControlPanelEducation'
 import EducationTable from '../shared/EducationTable'
 import ModalEducation from '../shared/ModalEducation'
 import Pagination from '../shared/Pagination'
+import SkeletonElem from '../shared/SkeletonElem'
 import {deleteEducationById, fetchAllEducations} from '../store/thunks/educationThunk'
 
 const Education = () => {
-	const {educationList, listLength, rejected} = useAppSelector(state => state.educationReducer)
+	const {educationList, listLength, loading, rejected} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 
-	const [order, setOrder] = useState('ASC')
-	const [skip, setSkip] = useState(0)
-	const [take, setTake] = useState(10)
 	const [active, setActive] = useState<number[]>([])
 	const {isOpen, onOpen, onClose} = useDisclosure()
 
+	useEffect(() => {
+		console.log(active)
+	}, [active])
+
 	//
-
-	const handleSkip = (offset: number) => setSkip(offset)
-
-	const handleTake = (page: number) => setTake(page)
 
 	const handleActive = (id: number) => {
 		if (active.includes(id)) {
@@ -35,7 +33,7 @@ const Education = () => {
 		if (active.length) {
 			await dispatch(deleteEducationById(active))
 			setActive([])
-			const data = {order, skip, take}
+			const data = {order: 'ASC', skip: 0, take: 10}
 			await dispatch(fetchAllEducations(data))
 		}
 		return
@@ -44,16 +42,17 @@ const Education = () => {
 	//
 
 	useEffect(() => {
-		const data = {order, skip, take}
+		const data = {order: 'ASC', skip: 0, take: 10}
 		dispatch(fetchAllEducations(data))
-	}, [order, skip, take])
+	}, [])
 
 	return (
 		<Flex flexDir='column' w='100%' alignItems='center'>
-			<Heading marginY='20px' fontSize='25px' textAlign='center'>Образование. Выбор и редактирование</Heading>
+			<Heading marginY='20px' fontSize='25px' textAlign='center'>Education. Choose and edit.</Heading>
 			<ControlPanelEducation active={active} handleDelete={handleDelete} onOpen={onOpen} />
-			<EducationTable order={order} active={active} handleActive={handleActive} setOrder={setOrder} />
-			<Pagination handleTake={handleTake} />
+			{loading ? <SkeletonElem /> :
+				<EducationTable active={active} setActive={setActive} handleActive={handleActive} />}
+			<Pagination />
 			<ModalEducation isOpen={isOpen} onClose={onClose} />
 		</Flex>
 	)

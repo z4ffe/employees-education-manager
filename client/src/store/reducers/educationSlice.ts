@@ -9,6 +9,7 @@ export interface IEducationElem {
 interface IEducationState {
 	educationList: IEducationElem[]
 	listLength: number
+	reversed: boolean
 	loading: boolean
 	rejected: boolean
 }
@@ -16,6 +17,7 @@ interface IEducationState {
 const initialState: IEducationState = {
 	educationList: [],
 	listLength: 0,
+	reversed: true,
 	loading: false,
 	rejected: false,
 }
@@ -23,12 +25,19 @@ const initialState: IEducationState = {
 const educationSlice = createSlice({
 	name: 'educationSlice',
 	initialState: initialState,
-	reducers: {},
+	reducers: {
+		educationReverse: (state) => {
+			state.reversed = !state.reversed
+			state.educationList.reverse()
+		},
+	},
 	extraReducers: builder => {
 		builder.addCase(fetchAllEducations.pending, (state) => {
+			state.reversed = false
 			state.loading = true
 		})
 		builder.addCase(fetchAllEducations.fulfilled, (state, action) => {
+			state.reversed = false
 			state.loading = false
 			state.educationList = action.payload[0]
 			state.listLength = action.payload[1]
