@@ -10,6 +10,11 @@ interface IEducationState {
 	educationList: IEducationElem[]
 	listLength: number
 	reversed: boolean
+	pages: number
+	currentPage: number
+	order: 'ASC' | 'DESC'
+	skip: number
+	take: number
 	loading: boolean
 	rejected: boolean
 }
@@ -17,6 +22,11 @@ interface IEducationState {
 const initialState: IEducationState = {
 	educationList: [],
 	listLength: 0,
+	pages: 1,
+	currentPage: 1,
+	order: 'ASC',
+	skip: 0,
+	take: 5,
 	reversed: true,
 	loading: false,
 	rejected: false,
@@ -26,9 +36,22 @@ const educationSlice = createSlice({
 	name: 'educationSlice',
 	initialState: initialState,
 	reducers: {
-		educationReverse: (state) => {
-			state.reversed = !state.reversed
-			state.educationList.reverse()
+		handleOrder: (state) => {
+			state.order = state.order === 'ASC' ? 'DESC' : 'ASC'
+		},
+		handleTake: (state, action) => {
+			state.take = action.payload
+		},
+		nextPage: (state) => {
+			if (state.currentPage < state.pages) {
+				state.currentPage++
+				state.skip = state.skip + state.take
+			}
+		},
+		prevPage: (state) => {
+			if (state.currentPage === 1) return
+			state.currentPage--
+			state.skip = state.skip - state.take
 		},
 	},
 	extraReducers: builder => {
@@ -39,8 +62,10 @@ const educationSlice = createSlice({
 		builder.addCase(fetchAllEducations.fulfilled, (state, action) => {
 			state.reversed = false
 			state.loading = false
-			state.educationList = action.payload[0]
-			state.listLength = action.payload[1]
+			state.educationList = action.payload.educationList[0]
+			state.listLength = action.payload.educationList[1]
+			state.pages = action.payload.pagination.pages
+			state.currentPage = action.payload.pagination.currentPage
 		})
 		builder.addCase(fetchAllEducations.rejected, (state) => {
 			state.loading = false

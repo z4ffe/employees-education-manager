@@ -12,8 +12,9 @@ interface IProps {
 }
 
 const EducationTable: React.FC<IProps> = ({active, setActive, handleActive}): JSX.Element => {
-	const {educationList, loading, reversed} = useAppSelector(state => state.educationReducer)
+	const {educationList, loading, order} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
+	const orderBool = order === 'ASC'
 
 	const handleAllRowsSelect = () => {
 		if (educationList.length === active.length) {
@@ -22,7 +23,7 @@ const EducationTable: React.FC<IProps> = ({active, setActive, handleActive}): JS
 		setActive(educationList.map(el => el.id))
 	}
 
-	if (!educationList.length && !loading) {
+	if ((!educationList.length && !loading)) {
 		return (
 			<Flex w='70%' h='300px' alignItems='center' justifyContent='center'>
 				<Heading fontSize='20px'>Add new item...</Heading>
@@ -37,7 +38,7 @@ const EducationTable: React.FC<IProps> = ({active, setActive, handleActive}): JS
 					<Thead>
 						<Tr>
 							<Th cursor='pointer'
-								 onClick={() => dispatch(educationSliceActions.educationReverse())}>ID {reversed ?
+								 onClick={() => dispatch(educationSliceActions.handleOrder())}>ID {!orderBool ?
 								<ArrowUpIcon /> : <ArrowDownIcon />}</Th>
 							<Th><Checkbox isChecked={!!active.length}
 											  onInput={handleAllRowsSelect} /></Th>

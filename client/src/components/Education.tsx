@@ -9,17 +9,11 @@ import SkeletonElem from '../shared/SkeletonElem'
 import {deleteEducationById, fetchAllEducations} from '../store/thunks/educationThunk'
 
 const Education = () => {
-	const {educationList, listLength, loading, rejected} = useAppSelector(state => state.educationReducer)
+	const {loading, currentPage, skip, take, order} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 
 	const [active, setActive] = useState<number[]>([])
 	const {isOpen, onOpen, onClose} = useDisclosure()
-
-	useEffect(() => {
-		console.log(active)
-	}, [active])
-
-	//
 
 	const handleActive = (id: number) => {
 		if (active.includes(id)) {
@@ -33,18 +27,16 @@ const Education = () => {
 		if (active.length) {
 			await dispatch(deleteEducationById(active))
 			setActive([])
-			const data = {order: 'ASC', skip: 0, take: 10}
+			const data = {order, skip, take}
 			await dispatch(fetchAllEducations(data))
 		}
 		return
 	}
 
-	//
-
 	useEffect(() => {
-		const data = {order: 'ASC', skip: 0, take: 10}
+		const data = {order, skip, take}
 		dispatch(fetchAllEducations(data))
-	}, [])
+	}, [currentPage, order, skip, take])
 
 	return (
 		<Flex flexDir='column' w='100%' alignItems='center'>

@@ -9,7 +9,7 @@ interface IProps {
 	handle?: () => void
 }
 
-const CrudButtons: React.FC<IProps> = ({text, background, icon, handle, disabledCriteria}): JSX.Element => {
+const CRUDButton: React.FC<IProps> = ({text, background, icon, handle, disabledCriteria}): JSX.Element => {
 	return (
 		<Button w='130px' h='130px' borderRadius='10px' backgroundColor={background}
 				  boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' fontWeight='600' fontSize='14px'
@@ -22,4 +22,4 @@ const CrudButtons: React.FC<IProps> = ({text, background, icon, handle, disabled
 	)
 }
 
-export default CrudButtons
+export default CRUDButton

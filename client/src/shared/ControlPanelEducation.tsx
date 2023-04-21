@@ -1,7 +1,7 @@
 import {AddIcon, DeleteIcon, RepeatIcon} from '@chakra-ui/icons'
 import {Flex} from '@chakra-ui/react'
 import React from 'react'
-import CRUDButtons from './CRUDButtons'
+import CRUDButtons from './CRUDButton'
 
 interface IProps {
 	active: number[]

@@ -1,5 +1,6 @@
 import DBDataSource from '../db'
 import Education from '../entities/education'
+import pagesCalc from '../utils/pagination'
 
 const addNewEducation = async (req: any) => {
 	const newEducation = new Education()
@@ -8,9 +9,10 @@ const addNewEducation = async (req: any) => {
 	return await DBDataSource.getRepository('education').findAndCount()
 }
 
+
 const getAllEducations = async (order: any = 'ASC', skip: any = 0, take: any = 10) => {
 	const educationRepository = await DBDataSource.getRepository('education')
-	return await educationRepository.findAndCount({
+	const educationList = await educationRepository.findAndCount({
 		order:
 			{
 				id: order,
@@ -18,6 +20,8 @@ const getAllEducations = async (order: any = 'ASC', skip: any = 0, take: any = 1
 		skip: skip,
 		take: take,
 	})
+	const pagination = pagesCalc(educationList, skip, take)
+	return {educationList, pagination}
 }
 
 const updateEducationById = async (id: number, title: string) => {
