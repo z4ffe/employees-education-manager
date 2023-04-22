@@ -1,10 +1,10 @@
 import {Button, Flex, Select, Text} from '@chakra-ui/react'
-import React from 'react'
+import React, {FC} from 'react'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks'
 import {educationSliceActions} from '../store/store'
 
 
-const Pagination = (): JSX.Element => {
+const Pagination: FC = () => {
 	const {listLength, pages, currentPage} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 
@@ -14,7 +14,7 @@ const Pagination = (): JSX.Element => {
 			<Flex alignItems='center'>
 				<Text fontWeight='600'>Rows on page: </Text>
 				<Select marginLeft='10px' placeholder='' defaultValue='25' isDisabled={!listLength} w='200px'
-						  onChange={(e) => dispatch(educationSliceActions.handleTake(+e.target.value))}>
+						  onChange={(event) => dispatch(educationSliceActions.handleTake(event))}>
 					{listLength === 0 ? <option value=''>Нет записей</option> : null}
 					{listLength > 0 ? <option value='5'>5</option> : null}
 					{listLength > 5 ? <option value='10'>10</option> : null}

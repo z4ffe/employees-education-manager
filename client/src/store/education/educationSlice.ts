@@ -1,5 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
-import {IEducationState} from '../../types/interfaces/education'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {ChangeEvent} from 'react'
+import {IEducationList, IEducationState} from '../../types/interfaces/education'
 import {addNewEducation, deleteEducationById, fetchAllEducations} from './educationThunk'
 
 const initialState: IEducationState = {
@@ -22,8 +23,8 @@ const educationSlice = createSlice({
 		handleOrder: (state) => {
 			state.order = state.order === 'ASC' ? 'DESC' : 'ASC'
 		},
-		handleTake: (state, action) => {
-			state.take = action.payload
+		handleTake: (state, action: PayloadAction<ChangeEvent<HTMLSelectElement>>) => {
+			state.take = Number(action.payload.target.value)
 		},
 		nextPage: (state) => {
 			if (state.currentPage < state.pages) {
@@ -42,7 +43,7 @@ const educationSlice = createSlice({
 			state.reversed = false
 			state.loading = true
 		})
-		builder.addCase(fetchAllEducations.fulfilled, (state, action) => {
+		builder.addCase(fetchAllEducations.fulfilled, (state, action: PayloadAction<IEducationList>) => {
 			state.reversed = false
 			state.loading = false
 			state.educationList = action.payload.educationList[0]
@@ -57,7 +58,7 @@ const educationSlice = createSlice({
 		builder.addCase(addNewEducation.pending, (state) => {
 			state.loading = true
 		})
-		builder.addCase(addNewEducation.fulfilled, (state, action) => {
+		builder.addCase(addNewEducation.fulfilled, (state, action: PayloadAction<IEducationList>) => {
 			state.loading = false
 			state.educationList = action.payload.educationList[0]
 			state.listLength = action.payload.educationList[1]
@@ -70,7 +71,7 @@ const educationSlice = createSlice({
 		builder.addCase(deleteEducationById.pending, (state) => {
 			state.loading = true
 		})
-		builder.addCase(deleteEducationById.fulfilled, (state, action) => {
+		builder.addCase(deleteEducationById.fulfilled, (state, action: PayloadAction<IEducationList>) => {
 			state.loading = false
 			state.educationList = action.payload.educationList[0]
 			state.listLength = action.payload.educationList[1]

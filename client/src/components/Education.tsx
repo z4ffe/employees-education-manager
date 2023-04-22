@@ -1,5 +1,5 @@
 import {Flex, Heading, useDisclosure} from '@chakra-ui/react'
-import React, {useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks'
 import ControlPanelEducation from '../shared/ControlPanelEducation'
 import EducationTable from '../shared/EducationTable'
@@ -8,7 +8,7 @@ import Pagination from '../shared/Pagination'
 import SkeletonElem from '../shared/SkeletonElem'
 import {deleteEducationById, fetchAllEducations} from '../store/education/educationThunk'
 
-const Education = () => {
+const Education: FC = () => {
 	const {loading, currentPage, take, order} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 

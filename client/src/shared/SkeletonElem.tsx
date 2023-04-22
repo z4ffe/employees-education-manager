@@ -1,17 +1,14 @@
 import {Flex, Skeleton, Stack} from '@chakra-ui/react'
-import React from 'react'
+import React, {FC} from 'react'
+import {useAppSelector} from '../lib/redux/hooks'
 
-const SkeletonElem: React.FC = (): JSX.Element => {
+const SkeletonElem: FC = (): JSX.Element => {
+	const take = useAppSelector(state => state.educationReducer.take)
+
 	return (
 		<Flex w='100%' h='100%' justifyContent='center'>
-			<Stack>
-				<Skeleton height='38px' w='1170px' />
-				<Skeleton height='38px' />
-				<Skeleton height='38px' />
-				<Skeleton height='38px' />
-				<Skeleton height='38px' />
-				<Skeleton height='38px' />
-				<Skeleton height='38px' />
+			<Stack w='70%'>
+				{Array(take).fill(<Skeleton height='35px' startColor='gray.100' endColor='gray.300' />)}
 			</Stack>
 		</Flex>
 	)
