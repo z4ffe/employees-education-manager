@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import {useAppDispatch} from '../lib/redux/hooks'
-import {addNewEducation} from '../store/thunks/educationThunk'
+import {addNewEducation} from '../store/education/educationThunk'
 
 interface IProps {
 	isOpen: boolean

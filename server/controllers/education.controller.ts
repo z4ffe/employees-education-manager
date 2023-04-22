@@ -1,11 +1,12 @@
 import {NextFunction, Request, Response} from 'express'
 import httpStatus from 'http-status'
 import educationService from '../services/education.service'
+import {IQueryOrder} from '../types/interfaces/query'
 
 const educationController = {
 	async getAllEducations(req: Request, res: Response, next: NextFunction) {
 		try {
-			const {order, skip, take} = req.query
+			const {order, skip, take} = req.query as IQueryOrder
 			const educationsList = await educationService.getAllEducations(order, skip, take)
 			if (!educationsList) {
 				res.status(httpStatus.NO_CONTENT).send('Content not found')
@@ -17,7 +18,8 @@ const educationController = {
 	},
 	async addEducation(req: Request, res: Response, next: NextFunction) {
 		try {
-			const educationList = await educationService.addNewEducation(req)
+			const {order, skip, take} = req.query as IQueryOrder
+			const educationList = await educationService.addNewEducation(req, order, skip, take)
 			return res.status(httpStatus.OK).json(educationList)
 		} catch (error) {
 			console.log(error)
@@ -37,11 +39,12 @@ const educationController = {
 	},
 	async deleteEducationById(req: Request, res: Response, next: NextFunction) {
 		try {
+			const {order, skip, take} = req.query as IQueryOrder
 			if (!req.body.id.length) {
 				return res.status(httpStatus.NOT_FOUND).json({message: 'Array must contain data'})
 			}
-			const deletedEducation = await educationService.deleteEducationById(req.body.id)
-			return res.status(httpStatus.OK).json({message: 'deleted', deletedEducation})
+			const educationList = await educationService.deleteEducationById(req.body.id, order, skip, take)
+			return res.status(httpStatus.OK).json(educationList)
 		} catch (error) {
 			console.log(error)
 		}

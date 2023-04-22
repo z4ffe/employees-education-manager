@@ -14,7 +14,7 @@
     "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
     "noImplicitAny": true,
-    "allowJs": true,
+    "allowJs": false,
     "typeRoots": [
       "./global.d.ts",
       "./node_modules/@types"

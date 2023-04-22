@@ -6,10 +6,10 @@ import EducationTable from '../shared/EducationTable'
 import ModalEducation from '../shared/ModalEducation'
 import Pagination from '../shared/Pagination'
 import SkeletonElem from '../shared/SkeletonElem'
-import {deleteEducationById, fetchAllEducations} from '../store/thunks/educationThunk'
+import {deleteEducationById, fetchAllEducations} from '../store/education/educationThunk'
 
 const Education = () => {
-	const {loading, currentPage, skip, take, order} = useAppSelector(state => state.educationReducer)
+	const {loading, currentPage, take, order} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 
 	const [active, setActive] = useState<number[]>([])
@@ -23,20 +23,19 @@ const Education = () => {
 		setActive(prevState => [...prevState, id])
 	}
 
-	const handleDelete = async () => {
-		if (active.length) {
-			await dispatch(deleteEducationById(active))
-			setActive([])
-			const data = {order, skip, take}
-			await dispatch(fetchAllEducations(data))
-		}
-		return
+	const handleDelete = async (): Promise<void> => {
+		if (!active.length) return
+		await dispatch(deleteEducationById(active)).unwrap().then(res => {
+			if (res.pagination.overPage) {
+				return dispatch(fetchAllEducations())
+			}
+		})
+		setActive([])
 	}
 
-	useEffect(() => {
-		const data = {order, skip, take}
-		dispatch(fetchAllEducations(data))
-	}, [currentPage, order, skip, take])
+	useEffect((): void => {
+		dispatch(fetchAllEducations())
+	}, [currentPage, order, take])
 
 	return (
 		<Flex flexDir='column' w='100%' alignItems='center'>

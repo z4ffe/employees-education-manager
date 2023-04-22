@@ -1,8 +1,8 @@
 import {Checkbox, Td, Tr} from '@chakra-ui/react'
 import React from 'react'
-import {IEducationElem} from '../store/reducers/educationSlice'
+import {IEducation} from '../types/interfaces/education'
 
-interface IProps extends IEducationElem {
+interface IProps extends IEducation {
 	active: number[]
 	idx: number
 	handleActive: (id: number) => void

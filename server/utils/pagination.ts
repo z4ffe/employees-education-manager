@@ -1,6 +1,7 @@
 interface IPageCalc {
 	pages: number
 	currentPage: number
+	overPage: boolean
 }
 
 const pagesCalc = (list: any, skip: any, take: any): IPageCalc => {
@@ -8,10 +9,11 @@ const pagesCalc = (list: any, skip: any, take: any): IPageCalc => {
 	const pages = Math.ceil(listLength / take)
 	const currentPage = pages - Math.ceil((listLength - skip) / take) + 1
 
-	return {
-		pages,
-		currentPage,
+	if (currentPage > pages) {
+		return {pages, currentPage: currentPage - 1, overPage: true}
 	}
+
+	return {pages, currentPage, overPage: false}
 }
 
 export default pagesCalc

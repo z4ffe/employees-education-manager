@@ -1,23 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {addNewEducation, fetchAllEducations} from '../thunks/educationThunk'
-
-export interface IEducationElem {
-	id: number
-	title: string
-}
-
-interface IEducationState {
-	educationList: IEducationElem[]
-	listLength: number
-	reversed: boolean
-	pages: number
-	currentPage: number
-	order: 'ASC' | 'DESC'
-	skip: number
-	take: number
-	loading: boolean
-	rejected: boolean
-}
+import {IEducationState} from '../../types/interfaces/education'
+import {addNewEducation, deleteEducationById, fetchAllEducations} from './educationThunk'
 
 const initialState: IEducationState = {
 	educationList: [],
@@ -76,10 +59,26 @@ const educationSlice = createSlice({
 		})
 		builder.addCase(addNewEducation.fulfilled, (state, action) => {
 			state.loading = false
-			state.educationList = action.payload[0]
-			state.listLength = action.payload[1]
+			state.educationList = action.payload.educationList[0]
+			state.listLength = action.payload.educationList[1]
+			state.pages = action.payload.pagination.pages
 		})
 		builder.addCase(addNewEducation.rejected, (state) => {
+			state.loading = false
+			state.rejected = true
+		})
+		builder.addCase(deleteEducationById.pending, (state) => {
+			state.loading = true
+		})
+		builder.addCase(deleteEducationById.fulfilled, (state, action) => {
+			state.loading = false
+			state.educationList = action.payload.educationList[0]
+			state.listLength = action.payload.educationList[1]
+			if (action.payload.pagination.overPage) {
+				state.skip = state.skip - state.take
+			}
+		})
+		builder.addCase(deleteEducationById.rejected, (state) => {
 			state.loading = false
 			state.rejected = true
 		})

@@ -1,12 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit'
-import educationSlice from './reducers/educationSlice'
-import employeeSlice from './reducers/employeeSlice'
+import educationSlice from './education/educationSlice'
+import employeeSlice from './employee/employeeSlice'
 
 const store = configureStore({
-   reducer: {
-      employeeReducer: employeeSlice.reducer,
-      educationReducer: educationSlice.reducer,
-   },
+	reducer: {
+		employeeReducer: employeeSlice.reducer,
+		educationReducer: educationSlice.reducer,
+	},
 })
 
 export type RootState = ReturnType<typeof store.getState>
