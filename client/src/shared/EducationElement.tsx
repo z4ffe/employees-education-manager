@@ -1,5 +1,5 @@
 import {Checkbox, Td, Tr} from '@chakra-ui/react'
-import React from 'react'
+import React, {FC} from 'react'
 import {IEducation} from '../types/interfaces/education'
 
 interface IProps extends IEducation {
@@ -8,7 +8,7 @@ interface IProps extends IEducation {
 	handleActive: (id: number) => void
 }
 
-const EducationElement: React.FC<IProps> = ({id, idx, title, active, handleActive}) => {
+const EducationElement: FC<IProps> = ({id, idx, title, active, handleActive}) => {
 	return (
 		<Tr cursor='pointer' onClick={() => handleActive(id)}>
 			<Td>{id}</Td>

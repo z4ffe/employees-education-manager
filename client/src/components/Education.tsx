@@ -39,7 +39,7 @@ const Education: FC = () => {
 
 	return (
 		<Flex flexDir='column' w='100%' alignItems='center'>
-			<Heading marginY='20px' fontSize='25px' textAlign='center'>Education. Choose and edit.</Heading>
+			<Heading marginY='20px' fontSize='25px' textAlign='center'>Education Editor</Heading>
 			<ControlPanelEducation active={active} handleDelete={handleDelete} onOpen={onOpen} />
 			{loading ? <SkeletonElem /> :
 				<EducationTable active={active} setActive={setActive} handleActive={handleActive} />}

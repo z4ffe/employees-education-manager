@@ -1,6 +1,6 @@
 import {AddIcon, DeleteIcon, RepeatIcon} from '@chakra-ui/icons'
 import {Flex} from '@chakra-ui/react'
-import React from 'react'
+import React, {FC} from 'react'
 import CRUDButtons from './CRUDButton'
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 
-const ControlPanelEducation: React.FC<IProps> = ({handleDelete, active, onOpen}) => {
+const ControlPanelEducation: FC<IProps> = ({handleDelete, active, onOpen}) => {
 	const buttonList = [
 		{
 			id: 1,

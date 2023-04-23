@@ -1,5 +1,5 @@
 import {Button, Text} from '@chakra-ui/react'
-import React from 'react'
+import React, {FC} from 'react'
 
 interface IProps {
 	text: string
@@ -9,7 +9,7 @@ interface IProps {
 	handle?: () => void
 }
 
-const CRUDButton: React.FC<IProps> = ({text, background, icon, handle, disabledCriteria}): JSX.Element => {
+const CRUDButton: FC<IProps> = ({text, background, icon, handle, disabledCriteria}): JSX.Element => {
 	return (
 		<Button w='130px' h='130px' borderRadius='10px' backgroundColor={background}
 				  boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' fontWeight='600' fontSize='14px'

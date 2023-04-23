@@ -1,6 +1,6 @@
 import {ArrowDownIcon, ArrowUpIcon} from '@chakra-ui/icons'
 import {Checkbox, Flex, Heading, Table, TableContainer, Tbody, Th, Thead, Tr} from '@chakra-ui/react'
-import React, {Dispatch, SetStateAction} from 'react'
+import React, {Dispatch, FC, SetStateAction} from 'react'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks'
 import {educationSliceActions} from '../store/store'
 import EducationElement from './EducationElement'
@@ -11,7 +11,7 @@ interface IProps {
 	handleActive: (id: number) => void
 }
 
-const EducationTable: React.FC<IProps> = ({active, setActive, handleActive}): JSX.Element => {
+const EducationTable: FC<IProps> = ({active, setActive, handleActive}): JSX.Element => {
 	const {educationList, loading, order} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 	const orderBool = order === 'ASC'

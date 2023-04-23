@@ -12,7 +12,7 @@ import {
 	ModalHeader,
 	ModalOverlay,
 } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import React, {FC, useState} from 'react'
 import {useAppDispatch} from '../lib/redux/hooks'
 import {addNewEducation} from '../store/education/educationThunk'
 
@@ -21,7 +21,7 @@ interface IProps {
 	onClose: () => void
 }
 
-const ModalEducation: React.FC<IProps> = ({isOpen, onClose}): JSX.Element => {
+const ModalEducation: FC<IProps> = ({isOpen, onClose}): JSX.Element => {
 	const dispatch = useAppDispatch()
 	const [newEducation, setNewEducation] = useState('')
 

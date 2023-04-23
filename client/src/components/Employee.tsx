@@ -1,15 +1,15 @@
 import {Flex} from '@chakra-ui/react'
-import React from 'react'
+import React, {FC} from 'react'
 import {useAppSelector} from '../lib/redux/hooks'
 
-const Employee = () => {
-   const employeeStore = useAppSelector(state => state.employeeReducer)
+const Employee: FC = () => {
+	const employeeStore = useAppSelector(state => state.employeeReducer)
 
-   return (
-      <Flex>
+	return (
+		<Flex>
 
-      </Flex>
-   )
+		</Flex>
+	)
 }
 
 export default Employee

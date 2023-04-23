@@ -63,6 +63,7 @@ const educationSlice = createSlice({
 			state.educationList = action.payload.educationList[0]
 			state.listLength = action.payload.educationList[1]
 			state.pages = action.payload.pagination.pages
+			state.currentPage = action.payload.pagination.currentPage
 		})
 		builder.addCase(addNewEducation.rejected, (state) => {
 			state.loading = false
@@ -75,7 +76,9 @@ const educationSlice = createSlice({
 			state.loading = false
 			state.educationList = action.payload.educationList[0]
 			state.listLength = action.payload.educationList[1]
-			if (action.payload.pagination.overPage) {
+			state.pages = action.payload.pagination.pages
+			state.currentPage = action.payload.pagination.currentPage
+			if (action.payload.pagination.overPage && state.skip - state.take >= 0) {
 				state.skip = state.skip - state.take
 			}
 		})
