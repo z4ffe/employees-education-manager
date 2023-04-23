@@ -15,6 +15,7 @@ import {
 import React, {FC, useState} from 'react'
 import {useAppDispatch} from '../lib/redux/hooks'
 import {addNewEducation} from '../store/education/educationThunk'
+import AddCancelBtn from './AddCancelBtn'
 
 interface IProps {
 	isOpen: boolean
@@ -39,8 +40,8 @@ const ModalEducation: FC<IProps> = ({isOpen, onClose}): JSX.Element => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} isCentered>
 			<ModalOverlay />
-			<ModalContent h='210px'>
-				<ModalHeader textAlign='center'>Добавить образование</ModalHeader>
+			<ModalContent h='190px'>
+				<ModalHeader textAlign='center'>Add education</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
 					<InputGroup>
@@ -48,13 +49,12 @@ const ModalEducation: FC<IProps> = ({isOpen, onClose}): JSX.Element => {
 							pointerEvents='none'
 							children={<EditIcon color='gray.300' />}
 						/>
-						<Input type='text' placeholder='Введите название образования' value={newEducation}
+						<Input type='text' placeholder='Enter education name...' value={newEducation}
 								 onChange={(e) => setNewEducation(e.target.value)} />
 					</InputGroup>
 					<Flex gap='10px' justifyContent='center' marginTop='20px'>
-						<Button backgroundColor='#287B30' color='white' fontSize='14px'
-								  isDisabled={!newEducation} onClick={handleAddEducation}>Добавить</Button>
-						<Button backgroundColor='#D62C29' color='white' fontSize='14px' onClick={handleClose}>Отмена</Button>
+						<AddCancelBtn disabled={!newEducation} click={handleAddEducation} type={'ADD'} />
+						<AddCancelBtn click={handleClose} type={'CANCEL'} />
 					</Flex>
 				</ModalBody>
 			</ModalContent>

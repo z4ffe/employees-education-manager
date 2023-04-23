@@ -8,7 +8,7 @@ const SkeletonElem: FC = (): JSX.Element => {
 	return (
 		<Flex w='100%' h='100%' justifyContent='center'>
 			<Stack w='70%'>
-				{Array(take).fill(<Skeleton height='35px' startColor='gray.100' endColor='gray.300' />)}
+				{Array.from(Array(take), (_, idx) => <Skeleton key={idx} height='35px' startColor='gray.100' endColor='gray.300'/>)}
 			</Stack>
 		</Flex>
 	)

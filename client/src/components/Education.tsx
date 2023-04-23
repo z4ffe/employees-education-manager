@@ -43,7 +43,7 @@ const Education: FC = () => {
 			<ControlPanelEducation active={active} handleDelete={handleDelete} onOpen={onOpen} />
 			{loading ? <SkeletonElem /> :
 				<EducationTable active={active} setActive={setActive} handleActive={handleActive} />}
-			<Pagination />
+			<Pagination setActive={setActive}/>
 			<ModalEducation isOpen={isOpen} onClose={onClose} />
 		</Flex>
 	)

@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const EducationTable: FC<IProps> = ({active, setActive, handleActive}): JSX.Element => {
-	const {educationList, loading, order} = useAppSelector(state => state.educationReducer)
+	const {educationList, loading, order, take} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
 	const orderBool = order === 'ASC'
 
@@ -40,8 +40,7 @@ const EducationTable: FC<IProps> = ({active, setActive, handleActive}): JSX.Elem
 							<Th cursor='pointer'
 								 onClick={() => dispatch(educationSliceActions.handleOrder())}>ID {!orderBool ?
 								<ArrowUpIcon /> : <ArrowDownIcon />}</Th>
-							<Th><Checkbox isChecked={!!active.length}
-											  onInput={handleAllRowsSelect} /></Th>
+							<Th><Checkbox isChecked={!!active.length} isIndeterminate={active.length > 0 && active.length < educationList.length} onInput={handleAllRowsSelect} /></Th>
 							<Th>Education</Th>
 						</Tr>
 					</Thead>

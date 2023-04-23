@@ -1,12 +1,25 @@
 import {Button, Flex, Select, Text} from '@chakra-ui/react'
-import React, {FC} from 'react'
+import React, {Dispatch, FC, SetStateAction} from 'react'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks'
 import {educationSliceActions} from '../store/store'
 
+interface IProps {
+	setActive: Dispatch<SetStateAction<number[]>>
+}
 
-const Pagination: FC = () => {
+
+const Pagination: FC<IProps> = ({setActive}) => {
 	const {listLength, pages, currentPage} = useAppSelector(state => state.educationReducer)
 	const dispatch = useAppDispatch()
+
+	const handleNext = () => {
+		setActive([])
+		dispatch(educationSliceActions.nextPage())
+	}
+	const handlePrev = () => {
+		setActive([])
+		dispatch(educationSliceActions.prevPage())
+	}
 
 	return (
 		<Flex w='70%' border='1px solid #EDF2F7' borderTop='none' borderRadius='0 0 10px 10px' h='70px'
@@ -24,10 +37,8 @@ const Pagination: FC = () => {
 			</Flex>
 			<Flex alignItems='center' marginLeft='10px'>
 				<Text fontWeight='600'>{currentPage} to {pages}</Text>
-				<Button marginLeft='10px' variant='outline' isDisabled={!listLength}
-						  onClick={() => dispatch(educationSliceActions.prevPage())}>Prev</Button>
-				<Button marginLeft='10px' variant='outline' isDisabled={!listLength}
-						  onClick={() => dispatch(educationSliceActions.nextPage())}>Next</Button>
+				<Button marginLeft='10px' variant='outline' isDisabled={!listLength} onClick={handlePrev}>Back</Button>
+				<Button marginLeft='10px' variant='outline' isDisabled={!listLength} onClick={handleNext}>Next</Button>
 			</Flex>
 		</Flex>
 	)
