@@ -16,13 +16,15 @@ const addNewEducation = async (req: any, order: string, skip: string, take: stri
 	return getAllEducations(order, skip, take)
 }
 
-const updateEducationById = async (id: number, title: string) => {
+const updateEducationById = async (id: number, title: string, order: string, skip: string, take: string) => {
 	const educationRepository = await DBDataSource.getRepository(Education)
 	const currentEducation = await educationRepository.findOneBy({id})
 	if (currentEducation) {
 		currentEducation.title = title
-		return await educationRepository.save(currentEducation)
+		await educationRepository.save(currentEducation)
+		return getAllEducations(order, skip, take)
 	}
+	return
 }
 
 const deleteEducationById = async (id: number[], order: string, skip: string, take: string): Promise<IEducationList> => {

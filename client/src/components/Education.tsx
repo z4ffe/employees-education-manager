@@ -3,7 +3,9 @@ import React, {FC, useEffect, useState} from 'react'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks'
 import ControlPanelEducation from '../shared/ControlPanelEducation'
 import EducationTable from '../shared/EducationTable'
-import ModalEducation from '../shared/ModalEducation'
+import ModalAddEducation from '../shared/ModalAddEducation'
+import ModalEditEducation from '../shared/ModalEditEducation'
+import ModalWrapper from '../shared/ModalWrapper'
 import Pagination from '../shared/Pagination'
 import SkeletonElem from '../shared/SkeletonElem'
 import {deleteEducationById, fetchAllEducations} from '../store/education/educationThunk'
@@ -14,6 +16,7 @@ const Education: FC = () => {
 
 	const [active, setActive] = useState<number[]>([])
 	const {isOpen, onOpen, onClose} = useDisclosure()
+	const [modal, setModal] = useState(false)
 
 	const handleActive = (id: number) => {
 		if (active.includes(id)) {
@@ -33,6 +36,16 @@ const Education: FC = () => {
 		setActive([])
 	}
 
+	const handleModalAdd = () => {
+		setModal(false)
+		onOpen()
+	}
+
+	const handleModalEdit = () => {
+		setModal(true)
+		onOpen()
+	}
+
 	useEffect((): void => {
 		dispatch(fetchAllEducations())
 	}, [currentPage, order, take])
@@ -40,11 +53,14 @@ const Education: FC = () => {
 	return (
 		<Flex flexDir='column' w='100%' alignItems='center'>
 			<Heading marginY='20px' fontSize='25px' textAlign='center'>Education Editor</Heading>
-			<ControlPanelEducation active={active} handleDelete={handleDelete} onOpen={onOpen} />
+			<ControlPanelEducation active={active} handleDelete={handleDelete} handleModalAdd={handleModalAdd} handleModalEdit={handleModalEdit}/>
 			{loading ? <SkeletonElem /> :
 				<EducationTable active={active} setActive={setActive} handleActive={handleActive} />}
-			<Pagination setActive={setActive}/>
-			<ModalEducation isOpen={isOpen} onClose={onClose} />
+			<Pagination setActive={setActive} />
+			<ModalWrapper isOpen={isOpen} onClose={onClose} modal={modal}>
+				{modal ? <ModalEditEducation active={active} onClose={onClose} /> :
+					<ModalAddEducation isOpen={isOpen} onClose={onClose} />}
+			</ModalWrapper>
 		</Flex>
 	)
 }

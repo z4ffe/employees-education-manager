@@ -6,11 +6,12 @@ import CRUDButtons from './CRUDButton'
 interface IProps {
 	active: number[]
 	handleDelete: () => void
-	onOpen: () => void
+	handleModalAdd: () => void
+	handleModalEdit: () => void
 }
 
 
-const ControlPanelEducation: FC<IProps> = ({handleDelete, active, onOpen}) => {
+const ControlPanelEducation: FC<IProps> = ({handleDelete, active, handleModalAdd, handleModalEdit}) => {
 	const buttonList = [
 		{
 			id: 1,
@@ -18,7 +19,7 @@ const ControlPanelEducation: FC<IProps> = ({handleDelete, active, onOpen}) => {
 			background: '#287B30',
 			icon: <AddIcon fontSize='20px' />,
 			disabledCriteria: false,
-			handle: onOpen,
+			handle: handleModalAdd,
 		},
 		{
 			id: 2,
@@ -26,6 +27,7 @@ const ControlPanelEducation: FC<IProps> = ({handleDelete, active, onOpen}) => {
 			background: '#2996CE',
 			icon: <RepeatIcon fontSize='20px' />,
 			disabledCriteria: active.length !== 1,
+			handle: handleModalEdit
 		},
 		{
 			id: 3,

@@ -27,7 +27,7 @@ const Pagination: FC<IProps> = ({setActive}) => {
 			<Flex alignItems='center'>
 				<Text fontWeight='600'>Content on page: </Text>
 				<Select marginLeft='10px' placeholder='' defaultValue='25' isDisabled={!listLength} w='200px'
-						  onChange={(event) => dispatch(educationSliceActions.handleTake(event))}>
+						  onChange={(event) => dispatch(educationSliceActions.handleTake(+event.target.value))}>
 					{listLength === 0 ? <option value=''>No content</option> : null}
 					{listLength > 0 ? <option value='5'>5</option> : null}
 					{listLength > 5 ? <option value='10'>10</option> : null}

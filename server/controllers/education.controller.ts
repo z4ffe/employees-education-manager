@@ -27,12 +27,13 @@ const educationController = {
 	},
 	async updateEducationById(req: Request, res: Response, next: NextFunction) {
 		try {
+			const {order, skip, take} = req.query as IQueryOrder
 			const currentEducation = await educationService.findEducationById(req)
 			if (!currentEducation) {
 				return res.status(httpStatus.NOT_FOUND).send('Content not found')
 			}
-			const updatedEducation = await educationService.updateEducationById(currentEducation.id, req.body.title)
-			return res.status(httpStatus.OK).json({message: 'updated', updatedEducation})
+			const educationList = await educationService.updateEducationById(currentEducation.id, req.body.title, order, skip, take)
+			return res.status(httpStatus.OK).json(educationList)
 		} catch (error) {
 			console.log(error)
 		}
