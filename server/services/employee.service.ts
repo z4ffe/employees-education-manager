@@ -9,7 +9,7 @@ const fetchAllEmployees = async (): Promise<ObjectLiteral[]> => {
 			last_name: 'ASC',
 		},
 		relations: {
-			education: true,
+			educationId: true,
 		},
 	})
 }

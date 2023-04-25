@@ -27,7 +27,7 @@ class Employee {
 	@ManyToOne(() => Education, education => education.employees, {
 		onDelete: 'SET NULL',
 	})
-	education: Education | number
+	educationId: Education | number
 
 	@CreateDateColumn()
 	created_at: string

@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {ChangeEvent} from 'react'
 import {IEducationList, IEducationState} from '../../types/interfaces/education'
 import {addNewEducation, deleteEducationById, fetchAllEducations, updateEducationById} from './educationThunk'
 
@@ -24,6 +23,7 @@ const educationSlice = createSlice({
 			state.order = state.order === 'ASC' ? 'DESC' : 'ASC'
 		},
 		handleTake: (state, action) => {
+			state.skip = 0
 			state.take = action.payload
 		},
 		nextPage: (state) => {
@@ -73,7 +73,6 @@ const educationSlice = createSlice({
 			state.loading = true
 		})
 		builder.addCase(updateEducationById.fulfilled, (state, action: PayloadAction<IEducationList>) => {
-			console.log(action.payload)
 			state.loading = false
 			state.educationList = action.payload.educationList[0]
 			state.listLength = action.payload.educationList[1]
@@ -87,13 +86,9 @@ const educationSlice = createSlice({
 		builder.addCase(deleteEducationById.pending, (state) => {
 			state.loading = true
 		})
-		builder.addCase(deleteEducationById.fulfilled, (state, action: PayloadAction<IEducationList>) => {
+		builder.addCase(deleteEducationById.fulfilled, (state, action: PayloadAction<any>) => {
 			state.loading = false
-			state.educationList = action.payload.educationList[0]
-			state.listLength = action.payload.educationList[1]
-			state.pages = action.payload.pagination.pages
-			state.currentPage = action.payload.pagination.currentPage
-			if (action.payload.pagination.overPage && state.skip - state.take >= 0) {
+			if (action.payload.affected >= state.educationList.length && state.skip - state.take >= 0) {
 				state.skip = state.skip - state.take
 			}
 		})

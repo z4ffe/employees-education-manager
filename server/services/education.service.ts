@@ -1,5 +1,7 @@
+import {In} from 'typeorm'
 import DBDataSource from '../db'
 import Education from '../entities/education'
+import Employee from '../entities/employee'
 import {IEducationList} from '../types/interfaces/education'
 import pagesCalc from '../utils/pagination'
 
@@ -17,27 +19,26 @@ const addNewEducation = async (req: any, order: string, skip: string, take: stri
 }
 
 const updateEducationById = async (id: number, title: string, order: string, skip: string, take: string) => {
-	const educationRepository = await DBDataSource.getRepository(Education)
-	const currentEducation = await educationRepository.findOneBy({id})
+	const educationRepo = await DBDataSource.getRepository(Education)
+	const currentEducation = await educationRepo.findOneBy({id})
 	if (currentEducation) {
 		currentEducation.title = title
-		await educationRepository.save(currentEducation)
+		await educationRepo.save(currentEducation)
 		return getAllEducations(order, skip, take)
 	}
 	return
 }
 
-const deleteEducationById = async (id: number[], order: string, skip: string, take: string): Promise<IEducationList> => {
-	const educationRepository = await DBDataSource.getRepository(Education)
-	await educationRepository.delete(id)
-	return getAllEducations(order, skip, take)
+const deleteEducationById = async (id: number[], order: string, skip: string, take: string): Promise<any> => {
+	const educationRepo = await DBDataSource.getRepository(Education)
+	return await educationRepo.delete(id)
 }
 
 //
 
 const findAllEducationByOrder = async (order: any, skip: string, take: string) => {
-	const educationRepository = await DBDataSource.getRepository(Education)
-	return await educationRepository.findAndCount({
+	const educationRepo = await DBDataSource.getRepository(Education)
+	return await educationRepo.findAndCount({
 		order:
 			{
 				id: order,
@@ -48,11 +49,16 @@ const findAllEducationByOrder = async (order: any, skip: string, take: string) =
 }
 
 const findEducationById = async (req: any) => {
-	const educationRepository = await DBDataSource.getRepository(Education)
-	return await educationRepository.findOneBy({id: req.body.id})
+	const educationRepo = await DBDataSource.getRepository(Education)
+	return await educationRepo.findOneBy({id: req.body.id})
+}
+
+const findEducationUsagesByEmployee = async (id: number[]) => {
+	const employeesRepo = await DBDataSource.getRepository(Employee)
+	return await employeesRepo.findBy({educationId: In(id)})
 }
 
 export default {
 	getAllEducations, addNewEducation, deleteEducationById, findEducationById, updateEducationById,
-	findAllEducationByOrder,
+	findAllEducationByOrder, findEducationUsagesByEmployee,
 }

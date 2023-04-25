@@ -1,13 +1,14 @@
 import {EditIcon} from '@chakra-ui/icons'
 import {
-	Alert, AlertDescription,
+	Alert,
 	AlertIcon,
-	AlertTitle, Collapse, Fade,
+	AlertTitle,
+	Collapse,
 	Flex,
 	Input,
 	InputGroup,
 	InputLeftElement,
-	ModalBody, ScaleFade,
+	ModalBody,
 	Spinner,
 } from '@chakra-ui/react'
 import React, {ChangeEvent, FC, useState} from 'react'
@@ -57,16 +58,16 @@ const ModalEditEducation: FC<IProps> = ({active, onClose}) => {
 				{currentEduc ? <Input type='text' placeholder='Change education name...' value={currentEduc.title}
 											 onChange={handleEducationChange} /> : <Spinner />}
 			</InputGroup>
-			<Collapse animateOpacity  in={warning}>
-			{warning ? <Flex marginY='7px'>
-				<Alert status='error'>
-					<AlertIcon />
-					<AlertTitle>Education can't be empty</AlertTitle>
-				</Alert>
-			</Flex> : null}
+			<Collapse animateOpacity in={warning}>
+				{warning ? <Flex marginY='7px'>
+					<Alert status='error'>
+						<AlertIcon />
+						<AlertTitle>Education can't be empty</AlertTitle>
+					</Alert>
+				</Flex> : null}
 			</Collapse>
 			<Flex gap='10px' justifyContent='center' marginTop='20px'>
-				<AddCancelBtn disabled={!modified} click={handleEditComplete} type={'ADD'} />
+				<AddCancelBtn disabled={!modified} click={handleEditComplete} type={'EDIT'} />
 				<AddCancelBtn click={onClose} type={'CANCEL'} />
 			</Flex>
 		</ModalBody>

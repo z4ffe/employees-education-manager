@@ -12,7 +12,7 @@ class Education {
 	})
 	title: string
 
-	@OneToMany(() => Employee, employee => employee.education)
+	@OneToMany(() => Employee, employee => employee.educationId)
 	employees: Employee[]
 }
 

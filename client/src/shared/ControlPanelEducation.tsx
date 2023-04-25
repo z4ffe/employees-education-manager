@@ -27,7 +27,7 @@ const ControlPanelEducation: FC<IProps> = ({handleDelete, active, handleModalAdd
 			background: '#2996CE',
 			icon: <RepeatIcon fontSize='20px' />,
 			disabledCriteria: active.length !== 1,
-			handle: handleModalEdit
+			handle: handleModalEdit,
 		},
 		{
 			id: 3,

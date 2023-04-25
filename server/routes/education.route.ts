@@ -9,6 +9,9 @@ router.route('')
 	.patch(educationController.updateEducationById)
 	.delete(educationController.deleteEducationById)
 
+router.route('/usage')
+	.post(educationController.findEducationUsagesByEmployee)
+
 export default router
 
 

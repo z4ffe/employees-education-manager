@@ -44,8 +44,16 @@ const educationController = {
 			if (!req.body.id.length) {
 				return res.status(httpStatus.NOT_FOUND).json({message: 'Array must contain data'})
 			}
-			const educationList = await educationService.deleteEducationById(req.body.id, order, skip, take)
-			return res.status(httpStatus.OK).json(educationList)
+			const deletedEducation = await educationService.deleteEducationById(req.body.id, order, skip, take)
+			return res.status(httpStatus.OK).json(deletedEducation)
+		} catch (error) {
+			console.log(error)
+		}
+	},
+	async findEducationUsagesByEmployee(req: Request, res: Response, next: NextFunction) {
+		try {
+			const educationUsagesList = await educationService.findEducationUsagesByEmployee(req.body.id)
+			return res.status(httpStatus.OK).json(educationUsagesList)
 		} catch (error) {
 			console.log(error)
 		}

@@ -2,7 +2,6 @@ import {createAsyncThunk} from '@reduxjs/toolkit'
 import apiInstance from '../../lib/axios/apiInstance'
 import {IEducation, IEducationList, IEducationState} from '../../types/interfaces/education'
 
-
 export const fetchAllEducations = createAsyncThunk('educationSlice/fetchAllEducations', async (_, {getState}): Promise<IEducationList> => {
 	try {
 		const {educationReducer} = getState() as {educationReducer: IEducationState}
@@ -59,18 +58,24 @@ export const updateEducationById = createAsyncThunk('educationSlice/updateEducat
 	}
 })
 
-export const deleteEducationById = createAsyncThunk('educationSlice/deleteEducationById', async (id: number[], {getState}): Promise<IEducationList> => {
+export const deleteEducationById = createAsyncThunk('educationSlice/deleteEducationById', async (id: number[]): Promise<IEducationList> => {
 	try {
-		const {educationReducer} = getState() as {educationReducer: IEducationState}
 		const response = await apiInstance.delete(`/education`, {
 			data: {
 				id: id,
 			},
-			params: {
-				order: educationReducer.order,
-				skip: educationReducer.skip,
-				take: educationReducer.take,
-			},
+		})
+		return response.data
+	} catch (error) {
+		console.log(error)
+		throw error
+	}
+})
+
+export const fetchEducationUsage = createAsyncThunk('educationSlice/fetchEducationUsage', async (id: number[]) => {
+	try {
+		const response = await apiInstance.post('/education/usage', {
+			id,
 		})
 		return response.data
 	} catch (error) {

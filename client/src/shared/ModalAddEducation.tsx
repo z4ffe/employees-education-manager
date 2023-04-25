@@ -1,12 +1,6 @@
 import {EditIcon} from '@chakra-ui/icons'
-import {
-	Flex,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	ModalBody,
-} from '@chakra-ui/react'
-import React, {FC, useEffect, useState} from 'react'
+import {Flex, Input, InputGroup, InputLeftElement, ModalBody} from '@chakra-ui/react'
+import React, {FC, useState} from 'react'
 import {useAppDispatch} from '../lib/redux/hooks'
 import {addNewEducation} from '../store/education/educationThunk'
 import AddCancelBtn from './AddCancelBtn'
@@ -21,8 +15,8 @@ const ModalAddEducation: FC<IProps> = ({isOpen, onClose}): JSX.Element => {
 
 	const [newEducation, setNewEducation] = useState('')
 
-	const handleAddEducation = () => {
-		dispatch(addNewEducation(newEducation))
+	const handleAddEducation = async () => {
+		await dispatch(addNewEducation(newEducation))
 		setNewEducation('')
 		onClose()
 	}

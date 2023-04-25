@@ -32,7 +32,6 @@ const main = async (): Promise<void> => {
 		await db.initialize()
 		console.log(`PostgreSQL Connected`)
 		await initDataBase()
-		console.log(`Inital values load successfully`)
 		await app.listen(PORT, (): void => console.log(`Server is running on PORT: ${PORT}`))
 	} catch (error) {
 		console.log(error)
