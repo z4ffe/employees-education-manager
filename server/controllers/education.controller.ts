@@ -1,10 +1,10 @@
-import {NextFunction, Request, Response} from 'express'
+import {Request, Response} from 'express'
 import httpStatus from 'http-status'
 import educationService from '../services/education.service'
 import {IQueryOrder} from '../types/interfaces/query'
 
 const educationController = {
-	async getAllEducations(req: Request, res: Response, next: NextFunction) {
+	async getAllEducations(req: Request, res: Response) {
 		try {
 			const {order, skip, take} = req.query as IQueryOrder
 			const educationsList = await educationService.getAllEducations(order, skip, take)
@@ -16,7 +16,7 @@ const educationController = {
 			console.log(error)
 		}
 	},
-	async addEducation(req: Request, res: Response, next: NextFunction) {
+	async addEducation(req: Request, res: Response) {
 		try {
 			const {order, skip, take} = req.query as IQueryOrder
 			const educationList = await educationService.addNewEducation(req, order, skip, take)
@@ -25,7 +25,7 @@ const educationController = {
 			console.log(error)
 		}
 	},
-	async updateEducationById(req: Request, res: Response, next: NextFunction) {
+	async updateEducationById(req: Request, res: Response) {
 		try {
 			const {order, skip, take} = req.query as IQueryOrder
 			const currentEducation = await educationService.findEducationById(req)
@@ -38,19 +38,18 @@ const educationController = {
 			console.log(error)
 		}
 	},
-	async deleteEducationById(req: Request, res: Response, next: NextFunction) {
+	async deleteEducationById(req: Request, res: Response) {
 		try {
-			const {order, skip, take} = req.query as IQueryOrder
 			if (!req.body.id.length) {
 				return res.status(httpStatus.NOT_FOUND).json({message: 'Array must contain data'})
 			}
-			const deletedEducation = await educationService.deleteEducationById(req.body.id, order, skip, take)
+			const deletedEducation = await educationService.deleteEducationById(req.body.id)
 			return res.status(httpStatus.OK).json(deletedEducation)
 		} catch (error) {
 			console.log(error)
 		}
 	},
-	async findEducationUsagesByEmployee(req: Request, res: Response, next: NextFunction) {
+	async findEducationUsagesByEmployee(req: Request, res: Response) {
 		try {
 			const educationUsagesList = await educationService.findEducationUsagesByEmployee(req.body.id)
 			return res.status(httpStatus.OK).json(educationUsagesList)

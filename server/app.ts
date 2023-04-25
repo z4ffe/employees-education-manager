@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended: true}))
 //
 
 app.use('/api', router)
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
 	res.status(httpStatus.OK).send('works')
 })
 

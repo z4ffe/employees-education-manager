@@ -29,7 +29,7 @@ const updateEducationById = async (id: number, title: string, order: string, ski
 	return
 }
 
-const deleteEducationById = async (id: number[], order: string, skip: string, take: string): Promise<any> => {
+const deleteEducationById = async (id: number[]): Promise<any> => {
 	const educationRepo = await DBDataSource.getRepository(Education)
 	return await educationRepo.delete(id)
 }
